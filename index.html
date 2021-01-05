@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Flappy Bird</title>
 </head>
-<body style="height: 100vh; background: #111; text-align: center;">
+<body style=" background: #111; text-align: center;">
 <canvas style="border: 2px solid skyblue;" id="c" width="600" height="400"></canvas>
 <script>
     context = c.getContext("2d");
@@ -19,13 +19,13 @@
     bird.src = "bird.png"
     birdX = birdDY = score = bestScore = 0;
     interval = birdSize = pipeWidth = topPipeBottomY = 31;
-    min = Math.ceil(50);
-    max = Math.floor(300);
+    min = Math.ceil(100);
+    max = Math.floor(200);
     birdY = pipeGap = Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive;
     c.onclick = () => (birdDY = 9)
     setInterval(() => {
         context.fillStyle = "#005178"
-        context.fillRect(0, 0, canvasSizeWidth, canvasSizeHeight); // Draw sky
+        context.fillRect(0, 0, canvasSizeWidth, canvasSizeWidth); // Draw sky
         birdY -= birdDY -= 0.5; // Gravity
         context.drawImage(bird, birdX, birdY, birdSize * (524/374), birdSize); // Draw bird
         context.fillStyle = gradient
