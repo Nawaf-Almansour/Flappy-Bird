@@ -11,18 +11,26 @@
     c.width = canvasSizeWidth = pipeX = window.innerWidth - 40;
     c.height  = canvasSizeHeight = window.innerHeight - 40;
     context.font = "20px Georgia";
+    var gradient = context.createLinearGradient(0, 0, c.width, 0);
+    gradient.addColorStop("0", "magenta");
+    gradient.addColorStop("0.5", "blue");
+    gradient.addColorStop("1.0", "red");
     const bird = new Image();
     bird.src = "bird.png"
     birdX = birdDY = score = bestScore = 0;
     interval = birdSize = pipeWidth = topPipeBottomY = 31;
-    birdY = pipeGap = 200;
+    min = Math.ceil(50);
+    max = Math.floor(300);
+    birdY = pipeGap = Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive;
     c.onclick = () => (birdDY = 9)
     setInterval(() => {
         context.fillStyle = "#005178"
         context.fillRect(0, 0, canvasSizeWidth, canvasSizeHeight); // Draw sky
         birdY -= birdDY -= 0.5; // Gravity
         context.drawImage(bird, birdX, birdY, birdSize * (524/374), birdSize); // Draw bird
-        context.fillStyle = "#007024"
+        context.fillStyle = gradient
+        context.shadowColor = 'red';
+        context.shadowBlur = 15;
         pipeX -= 8; // Gravity
         pipeX < -pipeWidth &&
         ((pipeX = canvasSizeWidth), (topPipeBottomY = pipeGap * Math.random()));
