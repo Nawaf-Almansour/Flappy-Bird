@@ -8,8 +8,8 @@
 <canvas style="border: 2px solid skyblue;" id="c" width="600" height="400"></canvas>
 <script>
     context = c.getContext("2d");
-    c.width = canvasSize = pipeX = window.innerWidth - 40;
-    c.height  = window.innerHeight - 40;
+    c.width = canvasSizeWidth = pipeX = window.innerWidth - 40;
+    c.height  = canvasSizeHeight = window.innerHeight - 40;
     const bird = new Image();
     bird.src = "bird.png"
     birdX = birdDY = score = bestScore = 0;
@@ -18,22 +18,22 @@
     c.onclick = () => (birdDY = 9)
     setInterval(() => {
         context.fillStyle = "#005178"
-        context.fillRect(0, 0, canvasSize, canvasSize); // Draw sky
+        context.fillRect(0, 0, canvasSizeWidth, canvasSizeHeight); // Draw sky
         birdY -= birdDY -= 0.5; // Gravity
         context.drawImage(bird, birdX, birdY, birdSize * (524/374), birdSize); // Draw bird
         context.fillStyle = "#007024"
         pipeX -= 8; // Gravity
         pipeX < -pipeWidth &&
-        ((pipeX = canvasSize), (topPipeBottomY = pipeGap * Math.random()));
+        ((pipeX = canvasSizeWidth), (topPipeBottomY = pipeGap * Math.random()));
         context.fillRect(pipeX, 0, pipeWidth, topPipeBottomY); // Draw top pipe
-        context.fillRect(pipeX, topPipeBottomY + pipeGap, pipeWidth, canvasSize); // Draw top pipe
+        context.fillRect(pipeX, topPipeBottomY + pipeGap, pipeWidth, canvasSizeWidth); // Draw top pipe
         context.fillStyle = "black";
         context.fillText(score++, 9, 25 );
         bestScore = bestScore < score  ? score : bestScore;
         context.fillText(`Best: ${bestScore}`, 9, 50 );
         ( ((birdY < topPipeBottomY || birdY > topPipeBottomY + pipeGap) &&  pipeX < birdSize * (524/374) ) // Bird hit pipe
-            || birdY > canvasSize) && // Bird falls off screen
-        ((birdDY = 0), (birdY = 200), (pipeX = canvasSize), (score = 0)); // Bird died
+            || birdY > canvasSizeWidth) && // Bird falls off screen
+        ((birdDY = 0), (birdY = 200), (pipeX = canvasSizeWidth), (score = 0)); // Bird died
     }, interval)
 </script>
 </body>
