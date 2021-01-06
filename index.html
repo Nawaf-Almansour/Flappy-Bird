@@ -9,7 +9,7 @@
 <script>
     context = c.getContext("2d");
     c.width = canvasSizeWidth = pipeX = window.innerWidth - 40;
-    c.height  = canvasSizeHeight = window.innerHeight - 40;
+    c.height = canvasSizeHeight = window.innerHeight - 40;
     context.font = "23px Georgia";
     var gradient = context.createLinearGradient(0, 0, c.width, 0);
     gradient.addColorStop("0", "magenta");
@@ -19,30 +19,26 @@
     bird.src = "bird.png"
     birdX = birdDY = score = bestScore = 0;
     interval = birdSize = pipeWidth = topPipeBottomY = 31;
-    min = Math.ceil(100);
-    max = Math.floor(300);
-    birdY = pipeGap = Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive;
-
+    setTimeout(function () {birdY = pipeGap = [100, 200, 300, 150, 250, 400][Math.floor(Math.random() * 3)];}, 3000);
     c.onclick = () => (birdDY = 9)
     setInterval(() => {
-
         context.fillStyle = "#005178"
         context.fillRect(0, 0, canvasSizeWidth, canvasSizeHeight); // Draw sky
         birdY -= birdDY -= 0.5; // Gravity
-        context.drawImage(bird, birdX, birdY, birdSize * (524/374), birdSize); // Draw bird
+        context.drawImage(bird, birdX, birdY, birdSize * (524 / 374), birdSize); // Draw bird
         context.fillStyle = gradient
         context.shadowColor = 'red';
         context.shadowBlur = 15;
-        pipeX -= 8; // Gravity
+        pipeX -= 15; // Gravity
         pipeX < -pipeWidth &&
         ((pipeX = canvasSizeWidth), (topPipeBottomY = pipeGap * Math.random()));
         context.fillRect(pipeX, 0, pipeWidth, topPipeBottomY); // Draw top pipe
         context.fillRect(pipeX, topPipeBottomY + pipeGap, pipeWidth, canvasSizeHeight); // Draw top pipe
         context.fillStyle = "black";
-        context.fillText(score++, 12, 25 );
-        bestScore = bestScore < score  ? score : bestScore;
-        context.fillText(`Best: ${bestScore}`, 12, 60 );
-        ( ((birdY < topPipeBottomY || birdY > topPipeBottomY + pipeGap) &&  pipeX < birdSize * (524/374) ) // Bird hit pipe
+        context.fillText(score++, 12, 25);
+        bestScore = bestScore < score ? score : bestScore;
+        context.fillText(`Best: ${bestScore}`, 12, 60);
+        (((birdY < topPipeBottomY || birdY > topPipeBottomY + pipeGap) && pipeX < birdSize * (524 / 374)) // Bird hit pipe
             || birdY > canvasSizeHeight) && // Bird falls off screen
         ((birdDY = 0), (birdY = 200), (pipeX = canvasSizeWidth), (score = 0)); // Bird died
     }, interval)
